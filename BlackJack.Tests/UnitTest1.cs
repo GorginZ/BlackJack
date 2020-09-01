@@ -8,7 +8,7 @@ namespace BlackJack.Tests
         [Fact]
         public void Test1()
         {
-
+          
         }
     }
 }
