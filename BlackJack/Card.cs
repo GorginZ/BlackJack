@@ -10,7 +10,7 @@ namespace BlackJack
             Suit = suit;
             Rank = rank;
         }
-   
+
     }
 
 }

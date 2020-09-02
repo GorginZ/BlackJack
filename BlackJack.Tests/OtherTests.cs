@@ -3,7 +3,7 @@ using Xunit;
 
 namespace BlackJack.Tests
 {
-    public class UnitTest1
+    public class OtherTests
     {
         [Fact]
         public void Test1()
