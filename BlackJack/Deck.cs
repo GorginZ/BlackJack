@@ -15,6 +15,8 @@ namespace BlackJack
                     Cards.Add(new Card(suit, rank));
                 }
             }
+
         }
+
     }
 }
