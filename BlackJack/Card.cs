@@ -1,6 +1,6 @@
 namespace BlackJack
 {
-    public class Card
+    public struct Card
     {
         public Suit Suit { get; }
         public Rank Rank { get; }
@@ -10,7 +10,6 @@ namespace BlackJack
             Suit = suit;
             Rank = rank;
         }
-
     }
 
 }

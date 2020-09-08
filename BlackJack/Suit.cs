@@ -2,8 +2,8 @@ namespace BlackJack
 { 
     public enum Suit 
     {
-        Heart,
-        Ace,
+        Hearts,
+        Diamonds,
         Clubs,
         Spades
     }
