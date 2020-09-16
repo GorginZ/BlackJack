@@ -17,5 +17,27 @@ namespace BlackJack.Tests
             Assert.Equal(expectedDistinctCardCount, actualDistinctCardCount);
         }
 
+        [Fact]
+        public void DrawingRemovesCardFromDeck()
+        {
+            var deck = new Deck();
+            var cardDrawn = deck.Draw();
+
+            Assert.DoesNotContain(cardDrawn, deck.Cards);
+            Assert.Equal(51, deck.Cards.Count);
+        }
+
+        [Fact]
+        public void CanShuffle()
+        {
+            var deck1 = new Deck();
+            var deck2 = new Deck();
+            
+            deck2.Shuffle();
+
+            Assert.Equal(52, deck2.Cards.Count);
+            Assert.NotEqual(deck1.Cards, deck2.Cards);
+        }
+
     }
 }

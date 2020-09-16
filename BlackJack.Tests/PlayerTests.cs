@@ -20,19 +20,5 @@ namespace BlackJack.Tests
 
         }
 
-        [Fact]
-        public void HittingRemovesCardFromDeck()
-        {
-            var player = new Player();
-            var deck = new Deck();
-
-            player.Hit(deck);
-            var cardDrawn = player.Hand.Last();
-
-            Assert.DoesNotContain(cardDrawn, deck.Cards);
-            Assert.Equal(51, deck.Cards.Count);
-
-        }
-
     }
 }

@@ -13,9 +13,8 @@ namespace BlackJack
 
         public void Hit(Deck deck)
         {
-          var cardDrawn = deck.Cards.Last();
-          Hand.Add(cardDrawn);
-          deck.Cards.RemoveAt(deck.Cards.Count - 1);
+          var drawnCard = deck.Draw();
+          Hand.Add(drawnCard);
         }
     }
 }
