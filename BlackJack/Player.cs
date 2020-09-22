@@ -16,5 +16,23 @@ namespace BlackJack
           var drawnCard = deck.Draw();
           Hand.Add(drawnCard);
         }
+
+        public int GetHandValue()
+        {
+          var value = 0;
+
+          foreach (var card in Hand)
+          {
+            if(card.Rank == Rank.Jack || card.Rank == Rank.Queen || card.Rank == Rank.King)
+            {
+              
+              value += 10;
+            } else
+            {
+              value += (int)card.Rank;
+            }
+          }
+          return value;
+        }
     }
 }

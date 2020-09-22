@@ -11,10 +11,8 @@ namespace BlackJack
         
             Console.WriteLine("Hello, Welcome to the casino!");
             game.ShuffleDeck();
-
-            //TODO next session : Wrtie a test then implement
-            game.DealFirstCards();
-            //Console.WriteLine($"You currently at {player1.getHandValue();}");
+            game.DealFirstHandToPlayer(game.Player1);
+            Console.WriteLine($"You currently at {game.Player1.GetHandValue()}");
         }
 
     }
