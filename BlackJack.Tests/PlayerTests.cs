@@ -1,5 +1,6 @@
 using Xunit;
 using System.Linq;
+using System.Collections.Generic;
 
 namespace BlackJack.Tests
 {
@@ -21,24 +22,52 @@ namespace BlackJack.Tests
         }
 
         [Theory]
-        [InlineData(Rank.King, Rank.Five, Rank.Two, 17)]
-        [InlineData(Rank.Four, Rank.Six, Rank.Three, 13)]
-        [InlineData(Rank.Ace, Rank.Four, Rank.Two, 17)]
-        [InlineData(Rank.Ace, Rank.Ten, Rank.Three, 14)]
-        public void CanGetValueOfHand(Rank card1Rank, Rank card2Rank, Rank card3Rank, int expectedValue)
+        [MemberData(nameof(InputData))]
+        public void CanCalculateCorrectValueOfHand(List<Card> hand, int expected)
         {
             var player = new Player();
-            var card1 = new Card(Suit.Hearts, card1Rank);
-            var card2 = new Card(Suit.Hearts, card2Rank);
-            var card3 = new Card(Suit.Hearts, card3Rank);
-
-
-            player.Hand.AddRange(new Card[]{card1, card2, card3});
+            player.Hand.AddRange(hand);
             
-            var actualValue = player.GetHandValue();
+            var actual = player.GetHandValue();
 
-            Assert.Equal(expectedValue, actualValue);
+            Assert.Equal(expected, actual);
         }
+
+        public static IEnumerable<object[]> InputData()
+        {  yield return new object[]
+            {
+                new List<Card>() {new Card(Suit.Clubs, Rank.Ace), new Card(Suit.Hearts, Rank.Ten), new Card(Suit.Diamonds, Rank.Three)},
+                14
+            };
+            yield return new object[]
+            {
+                new List<Card>() {new Card(Suit.Hearts, Rank.King), new Card(Suit.Clubs, Rank.Five), new Card(Suit.Spades, Rank.Two)},
+                17
+            };
+            yield return new object[]
+            {
+                new List<Card>() {new Card(Suit.Spades, Rank.Four), new Card(Suit.Diamonds, Rank.Six), new Card(Suit.Clubs, Rank.Three)},
+                13
+            };
+            yield return new object[]
+            {
+                new List<Card>() {new Card(Suit.Diamonds, Rank.Ace), new Card(Suit.Spades, Rank.Four), new Card(Suit.Hearts, Rank.Two), new Card(Suit.Clubs, Rank.Two)},
+                19
+            };
+          
+        }
+        
+        // [Theory]
+        // [MemberData(nameof(InputData))]
+        // //[Trait("Category", "Unit")]
+        // public void UserHasWon_Given4BlackPegs_ShouldReturnTrue(List<string>keyPegs, bool expectedResult)
+        // {
+        //     _decodingBoard.UpdateKeyPegs(keyPegs);
+        //     var actualResult = _winnerFinder.UserHasWon(_decodingBoard);
+        //     Assert.Equal(expectedResult, actualResult);
+        // }
+
+        
 
     }
 }
