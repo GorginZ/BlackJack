@@ -20,43 +20,46 @@ namespace BlackJack
 
     public int GetHandValue()
     {
-      var value = 0;
-      var acesInHand = new List<Card>();
-
-      foreach (var card in Hand)
-      {
-        if (card.Rank == Rank.Jack || card.Rank == Rank.Queen || card.Rank == Rank.King)
-        {
-
-          value += 10;
-        }
-        else if (card.Rank == Rank.Ace)
-        {
-          acesInHand.Add(card);
-        }
-        else 
-        {
-          value += (int)card.Rank;
-        }
-      }
-
-      value += AddAces(acesInHand, value);
-      return value;
+      var handWithoutAces = GetHandWithoutAces();
+      var acesInHand = GetAcesFromHand();
+      var runningValue = SumNonAces(handWithoutAces);
+      runningValue += SumAces(acesInHand, runningValue);
+      return runningValue;
     }
 
-    public int AddAces(List<Card> acesInHand, int valueBeforeAces)
+    private List<Card> GetHandWithoutAces()
     {
-
-      var valueOfAces = 0;
-      foreach (var card in acesInHand)
-      {
-        valueOfAces = valueBeforeAces <= 10 ? (valueOfAces += 11) : (valueOfAces += 1);
-      }
-      return valueOfAces;
+      return Hand.Where(card => card.Rank != Rank.Ace).ToList();
     }
 
+    private List<Card> GetAcesFromHand()
+    {
+      return Hand.Where(card => card.Rank == Rank.Ace).ToList();
+    }
+    private bool IsFaceCard(Card card)
+    {
+      return card.Rank == Rank.Jack || card.Rank == Rank.Queen || card.Rank == Rank.King;
+    }
 
-
-
+    private int SumNonAces(List<Card> handWithoutAces)
+    {
+      var runningValue = 0;
+      foreach (var card in handWithoutAces)
+      {
+        if (IsFaceCard(card))
+        {
+          runningValue += 10;
+        }
+        else
+        {
+          runningValue += (int)card.Rank;
+        }
+      }
+      return runningValue;
+    }
+    public int SumAces(List<Card> acesInHand, int valueBeforeAces)
+    {
+      return acesInHand.Aggregate(0, (currentValue, card) => valueBeforeAces <= 10 ? (currentValue + 11) : (currentValue + 1));
+    }
   }
 }
