@@ -14,10 +14,8 @@ namespace BlackJack
 
         public int CalculateValue()
         {
-            var handWithoutAces = GetHandWithoutAces();
-            var acesInHand = GetAcesFromHand();
-            var runningValue = SumNonAces(handWithoutAces);
-            runningValue += SumAces(acesInHand, runningValue);
+            var runningValue = SumNonAces(GetHandWithoutAces());
+            runningValue += SumAces(GetAcesFromHand(), runningValue);
             return runningValue;
         }
 
@@ -30,28 +28,14 @@ namespace BlackJack
         {
             return Cards.Where(card => card.Rank == Rank.Ace).ToList();
         }
-        private bool IsFaceCard(Card card)
-        {
-            return card.Rank == Rank.Jack || card.Rank == Rank.Queen || card.Rank == Rank.King;
-        }
 
         private int SumNonAces(List<Card> handWithoutAces)
         {
-            var runningValue = 0;
-            
-            foreach (var card in handWithoutAces)
-            {
-                if (IsFaceCard(card))
-                {
-                    runningValue += 10;
-                }
-                else
-                {
-                    runningValue += (int)card.Rank;
-                }
-            }
-
-            return runningValue;
+            return handWithoutAces.Aggregate(0, (currentValue, card) => IsFaceCard(card) ? (currentValue + 10) : currentValue + (int)card.Rank);
+        }
+        private bool IsFaceCard(Card card)
+        {
+            return card.Rank == Rank.Jack || card.Rank == Rank.Queen || card.Rank == Rank.King;
         }
         private int SumAces(List<Card> acesInHand, int valueBeforeAces)
         {
