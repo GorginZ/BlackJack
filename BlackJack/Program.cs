@@ -13,6 +13,7 @@ namespace BlackJack
             game.ShuffleDeck();
             game.DealFirstHandToPlayer(game.Player1);
             Console.WriteLine($"You currently at {game.Player1.GetHandValue()}");
+            Console.WriteLine($"with the hand {game.Player1.GetHandAsString()}");
         }
 
     }

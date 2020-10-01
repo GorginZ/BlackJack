@@ -21,5 +21,17 @@ namespace BlackJack.Tests
 
         }
 
+        [Fact]
+        public void CanGetHandAsString()
+        {
+            var player = new Player();
+            player.Hand.AddCard(new Card(Suit.Hearts, Rank.King));
+            player.Hand.AddCard(new Card(Suit.Spades, Rank.Five));
+
+            const string expected = "[['KING', 'HEARTS'], [5, 'SPADES']]";
+            var actual = player.GetHandAsString();
+
+            Assert.Equal(expected, actual);
+        }
     }
 }
