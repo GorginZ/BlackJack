@@ -13,10 +13,8 @@ namespace BlackJack
 
         public void DealFirstHandToPlayer(Player player)
         {
-            var card1 = _deck.Draw();
-            var card2 = _deck.Draw();
-
-            player.Hand.AddRange(new Card[] {card1,card2});
+            player.Hand.AddCard(_deck.Draw());
+            player.Hand.AddCard(_deck.Draw());
         }
     }
 }
