@@ -10,8 +10,8 @@ namespace BlackJack
             var game = new Game();
         
             Console.WriteLine("Hello, Welcome to the casino!");
-            Console.WriteLine($"You currently at {game.Player1.GetHandValue()}");
-            Console.WriteLine($"with the hand {game.Player1.GetHandAsString()}");
+            Console.WriteLine($"You currently at {game.players[0].GetHandValue()}");
+            Console.WriteLine($"with the hand {game.players[0].GetHandAsString()}");
             Console.WriteLine("Hit or stay? (Hit = 1, Stay = 0)");
             var nextAction = GetNextAction();
         }

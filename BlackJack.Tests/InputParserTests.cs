@@ -29,5 +29,18 @@ namespace BlackJack.Tests
             Assert.Equal(expectedNextAction, actualNextAction);
 
         }
+
+        [Fact]
+        public void unknownInput_returnsInvalid()
+        {
+    
+            const NextAction expectedNextAction = NextAction.Invalid;
+
+            var isValid = InputParser.TryParse("???", out var actualNextAction);
+
+            Assert.False(isValid);
+            Assert.Equal(expectedNextAction, actualNextAction);
+
+        }
     }
 }
