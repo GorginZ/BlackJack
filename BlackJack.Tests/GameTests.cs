@@ -5,11 +5,9 @@ namespace BlackJack.Tests
   public class GameTests
   {
     [Fact]
-    public void ShouldDealFirstTwoCardsToPlayer()
+    public void NewGameShouldDealFirstTwoCardsToPlayer()
     {
       var game = new Game();
-
-      game.DealFirstHandToPlayer(game.Player1);
 
       const int expectedPlayer1HandCount = 2;
       var actualPlayer1HandCount = game.Player1.Hand.Cards.Count;
