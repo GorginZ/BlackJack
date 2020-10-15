@@ -1,3 +1,4 @@
+using System;
 using Xunit;
 
 namespace BlackJack.Tests
@@ -16,7 +17,7 @@ namespace BlackJack.Tests
     }
 
     [Fact]
-    public void StayingEndsHumanPlayerTurnAndSwitchesToDealer_DoesNotDrawCard()
+    public void ProcessStayActionEndsHumanPlayerTurnAndSwitchesToDealer_DoesNotDrawCard()
     {
       var game = new Game();
 
@@ -30,5 +31,32 @@ namespace BlackJack.Tests
       Assert.Equal(expectedPlayer1HandCount, actualPlayer1HandCount);
       Assert.Equal(expectedActivePlayerIndex, actualActivePlayerIndex);
     }
+
+    [Fact]
+    public void ProcessHitActionDrawsCardDoesNotEndTurn()
+    {
+      var game = new Game();
+
+      game.ProcessNextAction(NextAction.Hit);
+
+      const int expectedPlayer1HandCount = 3;
+      var actualPlayer1HandCount = game.players[0].Hand.Cards.Count;
+      const int expectedActivePlayerIndex = 0;
+      var actualActivePlayerIndex = game.activePlayerIndex;
+
+      Assert.Equal(expectedPlayer1HandCount, actualPlayer1HandCount);
+      Assert.Equal(expectedActivePlayerIndex, actualActivePlayerIndex);
+    }
+
+    [Fact]
+    public void ProcessingInvalidActionThrowsInvalidOperationException()
+    {
+      var game = new Game();
+
+      var ex = Assert.Throws<InvalidOperationException>(() => game.ProcessNextAction(NextAction.Invalid));
+
+      Assert.Equal("Next Action was invalid", ex.Message);
+    }
+  
   }
 }
