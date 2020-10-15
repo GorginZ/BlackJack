@@ -8,18 +8,18 @@ namespace BlackJack
     private Deck _deck = new Deck();
 
     //Revisit this players list, do we need a list? (think about number of players)
-    public List<Player> players { get; } = new List<Player>();
+    public List<Player> Players { get; } = new List<Player>();
     public int activePlayerIndex { get; private set; }
 
     public Game()
     {
       var player1 = new Player();
       var dealer = new Player();
-      players.Add(player1);
-      players.Add(dealer);
+      Players.Add(player1);
+      Players.Add(dealer);
       activePlayerIndex = 0;
       ShuffleDeck();
-      DealFirstHandToPlayer(players[0]);
+      DealFirstHandToPlayer(Players[0]);
     }
 
     private void ShuffleDeck()
@@ -37,14 +37,30 @@ namespace BlackJack
     {
       if (nextAction == NextAction.Hit)
       {
-        players[activePlayerIndex].Hit(_deck);
+        Players[activePlayerIndex].Hit(_deck);
       }
-      else
+      else if (nextAction == NextAction.Stay)
       {
         activePlayerIndex = 1;
 
       }
-      throw new InvalidOperationException("Next Action was invalid");
+      else
+      {
+        throw new InvalidOperationException("Next Action was invalid");
+
+      }
+    }
+
+    public bool IsBust()
+    {
+      if (Players[activePlayerIndex].GetHandValue() > 21)
+      {
+        return true;
+      }
+      else
+      {
+        return false;
+      }
     }
 
   }

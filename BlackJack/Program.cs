@@ -13,8 +13,8 @@ namespace BlackJack
 
       do
       {
-        Console.WriteLine($"You currently at {game.players[0].GetHandValue()}");
-        Console.WriteLine($"with the hand {game.players[0].GetHandAsString()}");
+        Console.WriteLine($"You currently at {game.Players[0].GetHandValue()}");
+        Console.WriteLine($"with the hand {game.Players[0].GetHandAsString()}");
         Console.WriteLine("Hit or stay? (Hit = 1, Stay = 0)");
         nextAction = GetNextAction();
         game.ProcessNextAction(nextAction);

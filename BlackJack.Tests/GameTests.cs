@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Xunit;
 
 namespace BlackJack.Tests
@@ -11,7 +12,7 @@ namespace BlackJack.Tests
       var game = new Game();
 
       const int expectedPlayer1HandCount = 2;
-      var actualPlayer1HandCount = game.players[0].Hand.Cards.Count;
+      var actualPlayer1HandCount = game.Players[0].Hand.Cards.Count;
 
       Assert.Equal(expectedPlayer1HandCount, actualPlayer1HandCount);
     }
@@ -24,7 +25,7 @@ namespace BlackJack.Tests
       game.ProcessNextAction(NextAction.Stay);
 
       const int expectedPlayer1HandCount = 2;
-      var actualPlayer1HandCount = game.players[0].Hand.Cards.Count;
+      var actualPlayer1HandCount = game.Players[0].Hand.Cards.Count;
       const int expectedActivePlayerIndex = 1;
       var actualActivePlayerIndex = game.activePlayerIndex;
 
@@ -40,7 +41,7 @@ namespace BlackJack.Tests
       game.ProcessNextAction(NextAction.Hit);
 
       const int expectedPlayer1HandCount = 3;
-      var actualPlayer1HandCount = game.players[0].Hand.Cards.Count;
+      var actualPlayer1HandCount = game.Players[0].Hand.Cards.Count;
       const int expectedActivePlayerIndex = 0;
       var actualActivePlayerIndex = game.activePlayerIndex;
 
@@ -57,6 +58,16 @@ namespace BlackJack.Tests
 
       Assert.Equal("Next Action was invalid", ex.Message);
     }
+
+    public void PlayerBustsWhenHandValueExceeds21()
+    {
+      var game = new Game();
+
   
+
+
+
+  }
+
   }
 }
