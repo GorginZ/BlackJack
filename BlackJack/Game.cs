@@ -8,18 +8,16 @@ namespace BlackJack
     private Deck _deck = new Deck();
 
     //Revisit this players list, do we need a list? (think about number of players)
-    public List<Player> Players { get; } = new List<Player>();
-    public int activePlayerIndex { get; private set; }
+    public Player HumanPlayer { get; }
+    public Player AIDealer { get; }
+
 
     public Game()
     {
-      var player1 = new Player();
-      var dealer = new Player();
-      Players.Add(player1);
-      Players.Add(dealer);
-      activePlayerIndex = 0;
+      HumanPlayer = new Player();
+      AIDealer = new Player();
       ShuffleDeck();
-      DealFirstHandToPlayer(Players[0]);
+      DealFirstHandToPlayer(HumanPlayer);
     }
 
     private void ShuffleDeck()
@@ -33,15 +31,16 @@ namespace BlackJack
       player.Hand.AddCard(_deck.Draw());
     }
 
-    public void ProcessNextAction(NextAction nextAction)
+    public void ProcessHumanPlayerAction(NextAction nextAction)
     {
       if (nextAction == NextAction.Hit)
       {
-        Players[activePlayerIndex].Hit(_deck);
+        HumanPlayer.Hit(_deck);
+        ApplyBustRule(HumanPlayer);
       }
       else if (nextAction == NextAction.Stay)
       {
-        activePlayerIndex = 1;
+        HumanPlayer.HasStayed = true;
 
       }
       else
@@ -51,15 +50,11 @@ namespace BlackJack
       }
     }
 
-    public bool IsBust()
+    private void ApplyBustRule(Player player)
     {
-      if (Players[activePlayerIndex].GetHandValue() > 21)
+      if (player.GetHandValue() > 21)
       {
-        return true;
-      }
-      else
-      {
-        return false;
+        player.HasBust = true;
       }
     }
 

@@ -12,41 +12,37 @@ namespace BlackJack.Tests
       var game = new Game();
 
       const int expectedPlayer1HandCount = 2;
-      var actualPlayer1HandCount = game.Players[0].Hand.Cards.Count;
+      var actualPlayer1HandCount = game.HumanPlayer.Hand.Cards.Count;
 
       Assert.Equal(expectedPlayer1HandCount, actualPlayer1HandCount);
     }
 
     [Fact]
-    public void ProcessStayActionEndsHumanPlayerTurnAndSwitchesToDealer_DoesNotDrawCard()
+    public void ProcessStayActionDoesNotDrawCardStaysPlayer()
     {
       var game = new Game();
 
-      game.ProcessNextAction(NextAction.Stay);
+      game.ProcessHumanPlayerAction(NextAction.Stay);
 
       const int expectedPlayer1HandCount = 2;
-      var actualPlayer1HandCount = game.Players[0].Hand.Cards.Count;
-      const int expectedActivePlayerIndex = 1;
-      var actualActivePlayerIndex = game.activePlayerIndex;
+      var actualPlayer1HandCount = game.HumanPlayer.Hand.Cards.Count;
 
+      Assert.True(game.HumanPlayer.HasStayed == true);
       Assert.Equal(expectedPlayer1HandCount, actualPlayer1HandCount);
-      Assert.Equal(expectedActivePlayerIndex, actualActivePlayerIndex);
     }
 
     [Fact]
-    public void ProcessHitActionDrawsCardDoesNotEndTurn()
+    public void ProcessHitActionDrawsCard()
     {
       var game = new Game();
 
-      game.ProcessNextAction(NextAction.Hit);
+      game.ProcessHumanPlayerAction(NextAction.Hit);
 
       const int expectedPlayer1HandCount = 3;
-      var actualPlayer1HandCount = game.Players[0].Hand.Cards.Count;
-      const int expectedActivePlayerIndex = 0;
-      var actualActivePlayerIndex = game.activePlayerIndex;
+      var actualPlayer1HandCount = game.HumanPlayer.Hand.Cards.Count;
 
       Assert.Equal(expectedPlayer1HandCount, actualPlayer1HandCount);
-      Assert.Equal(expectedActivePlayerIndex, actualActivePlayerIndex);
+  
     }
 
     [Fact]
@@ -54,7 +50,7 @@ namespace BlackJack.Tests
     {
       var game = new Game();
 
-      var ex = Assert.Throws<InvalidOperationException>(() => game.ProcessNextAction(NextAction.Invalid));
+      var ex = Assert.Throws<InvalidOperationException>(() => game.ProcessHumanPlayerAction(NextAction.Invalid));
 
       Assert.Equal("Next Action was invalid", ex.Message);
     }
@@ -62,8 +58,10 @@ namespace BlackJack.Tests
     public void PlayerBustsWhenHandValueExceeds21()
     {
       var game = new Game();
+   
 
-  
+
+
 
 
 
