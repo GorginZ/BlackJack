@@ -7,14 +7,18 @@ namespace BlackJack
 
     static void Main(string[] args)
     {
-      var game = new Game();
+      var humanPlayer = new Player();
+      var aiDealer = new Player();
+
+      var game = new Game(humanPlayer, aiDealer);
+
       Console.WriteLine("Hello, Welcome to the casino!");
       NextAction nextAction;
 
       do
       {
-        Console.WriteLine($"You currently at {game.HumanPlayer.GetHandValue()}");
-        Console.WriteLine($"with the hand {game.HumanPlayer.GetHandAsString()}");
+        Console.WriteLine($"You currently at {game.GetPlayerHandValue()}");
+        Console.WriteLine($"with the hand {game.GetPlayerHandAsString()}");
         Console.WriteLine("Hit or stay? (Hit = 1, Stay = 0)");
         nextAction = GetNextAction();
         game.ProcessHumanPlayerAction(nextAction);

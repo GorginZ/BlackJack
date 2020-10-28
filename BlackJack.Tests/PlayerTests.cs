@@ -15,7 +15,7 @@ namespace BlackJack.Tests
             player.Hit(deck);
 
             const int expectedHandCount = 1;
-            var actualHand = player.Hand.Cards;
+            var actualHand = player.Hand;
 
             Assert.Equal(expectedHandCount, actualHand.Count);
 
@@ -25,8 +25,8 @@ namespace BlackJack.Tests
         public void CanGetHandAsString()
         {
             var player = new Player();
-            player.Hand.AddCard(new Card(Suit.Hearts, Rank.King));
-            player.Hand.AddCard(new Card(Suit.Spades, Rank.Five));
+            player.Hand.Add(new Card(Suit.Hearts, Rank.King));
+            player.Hand.Add(new Card(Suit.Spades, Rank.Five));
 
             const string expected = "[['KING', 'HEARTS'], [5, 'SPADES']]";
             var actual = player.GetHandAsString();

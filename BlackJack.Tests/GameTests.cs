@@ -9,10 +9,13 @@ namespace BlackJack.Tests
     [Fact]
     public void NewGameShouldDealFirstTwoCardsToPlayer()
     {
-      var game = new Game();
+      var humanPlayer = new Player();
+      var aiDealer = new Player();
+
+      var game = new Game(humanPlayer, aiDealer);
 
       const int expectedPlayer1HandCount = 2;
-      var actualPlayer1HandCount = game.HumanPlayer.Hand.Cards.Count;
+      var actualPlayer1HandCount = humanPlayer.Hand.Count;
 
       Assert.Equal(expectedPlayer1HandCount, actualPlayer1HandCount);
     }
@@ -20,26 +23,32 @@ namespace BlackJack.Tests
     [Fact]
     public void ProcessStayActionDoesNotDrawCardStaysPlayer()
     {
-      var game = new Game();
+      var humanPlayer = new Player();
+      var aiDealer = new Player();
+
+      var game = new Game(humanPlayer, aiDealer);
 
       game.ProcessHumanPlayerAction(NextAction.Stay);
 
       const int expectedPlayer1HandCount = 2;
-      var actualPlayer1HandCount = game.HumanPlayer.Hand.Cards.Count;
+      var actualPlayer1HandCount = humanPlayer.Hand.Count;
 
-      Assert.True(game.HumanPlayer.HasStayed == true);
+      Assert.True(humanPlayer.HasStayed == true);
       Assert.Equal(expectedPlayer1HandCount, actualPlayer1HandCount);
     }
 
     [Fact]
     public void ProcessHitActionDrawsCard()
     {
-      var game = new Game();
+      var humanPlayer = new Player();
+      var aiDealer = new Player();
+
+      var game = new Game(humanPlayer, aiDealer);
 
       game.ProcessHumanPlayerAction(NextAction.Hit);
 
       const int expectedPlayer1HandCount = 3;
-      var actualPlayer1HandCount = game.HumanPlayer.Hand.Cards.Count;
+      var actualPlayer1HandCount = humanPlayer.Hand.Count;
 
       Assert.Equal(expectedPlayer1HandCount, actualPlayer1HandCount);
   
@@ -48,7 +57,10 @@ namespace BlackJack.Tests
     [Fact]
     public void ProcessingInvalidActionThrowsInvalidOperationException()
     {
-      var game = new Game();
+      var humanPlayer = new Player();
+      var aiDealer = new Player();
+
+      var game = new Game(humanPlayer, aiDealer);
 
       var ex = Assert.Throws<InvalidOperationException>(() => game.ProcessHumanPlayerAction(NextAction.Invalid));
 
@@ -57,7 +69,15 @@ namespace BlackJack.Tests
 
     public void PlayerBustsWhenHandValueExceeds21()
     {
-      var game = new Game();
+      var humanPlayer = new Player();
+      var aiDealer = new Player();
+      var game = new Game(humanPlayer, aiDealer);
+
+      humanPlayer.Hand = new List<Card>{new Card(Suit.Hearts, Rank.King), new Card(Suit.Spades, Rank.Ace)};
+    }
+
+
+      
    
 
 

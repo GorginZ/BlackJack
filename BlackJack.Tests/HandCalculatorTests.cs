@@ -3,20 +3,14 @@ using Xunit;
 
 namespace BlackJack.Tests
 {
-    public class HandTests
+    public class HandCalculatorTests
     {
         [Theory]
         [MemberData(nameof(InputData))]
-        public void CanCalculateCorrectValueOfHand(List<Card> cards, int expected)
+        public void CanCalculateCorrectValueOfHand(List<Card> hand, int expected)
         {
-            var hand = new Hand();
 
-            foreach (var card in cards)
-            {
-                hand.AddCard(card);
-            }
-
-            var actual = hand.CalculateValue();
+            var actual = HandCalculator.Calculate(hand);
             Assert.Equal(expected, actual);
         }
 

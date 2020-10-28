@@ -8,16 +8,16 @@ namespace BlackJack
     private Deck _deck = new Deck();
 
     //Revisit this players list, do we need a list? (think about number of players)
-    public Player HumanPlayer { get; }
-    public Player AIDealer { get; }
+    private Player _humanPlayer { get; }
+    private Player _aiDealer { get; }
 
 
-    public Game()
+    public Game(Player humanPlayer, Player aiDealer)
     {
-      HumanPlayer = new Player();
-      AIDealer = new Player();
+      _humanPlayer = humanPlayer;
+      _aiDealer = aiDealer;
       ShuffleDeck();
-      DealFirstHandToPlayer(HumanPlayer);
+      DealFirstHandToPlayer(_humanPlayer);
     }
 
     private void ShuffleDeck()
@@ -27,20 +27,20 @@ namespace BlackJack
 
     private void DealFirstHandToPlayer(Player player)
     {
-      player.Hand.AddCard(_deck.Draw());
-      player.Hand.AddCard(_deck.Draw());
+      player.Hand.Add(_deck.Draw());
+      player.Hand.Add(_deck.Draw());
     }
 
     public void ProcessHumanPlayerAction(NextAction nextAction)
     {
       if (nextAction == NextAction.Hit)
       {
-        HumanPlayer.Hit(_deck);
-        ApplyBustRule(HumanPlayer);
+        _humanPlayer.Hit(_deck);
+        ApplyBustRule(_humanPlayer);
       }
       else if (nextAction == NextAction.Stay)
       {
-        HumanPlayer.HasStayed = true;
+        _humanPlayer.HasStayed = true;
 
       }
       else
@@ -54,8 +54,18 @@ namespace BlackJack
     {
       if (player.GetHandValue() > 21)
       {
-        player.HasBust = true;
+        player.HasBusted = true;
       }
+    }
+
+    public int GetPlayerHandValue()
+    {
+      return _humanPlayer.GetHandValue();
+    }
+
+    public string GetPlayerHandAsString()
+    {
+      return _humanPlayer.GetHandAsString();
     }
 
   }
