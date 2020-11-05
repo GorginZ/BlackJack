@@ -18,11 +18,27 @@ namespace BlackJack
       do
       {
         Console.WriteLine($"You currently at {game.GetPlayerHandValue()}");
+        //TODO: Add some logic to show if it's a soft hand
         Console.WriteLine($"with the hand {game.GetPlayerHandAsString()}");
         Console.WriteLine("Hit or stay? (Hit = 1, Stay = 0)");
         nextAction = GetNextAction();
-        game.ProcessHumanPlayerAction(nextAction);
-      } while (nextAction != NextAction.Stay);
+        if(nextAction == NextAction.Hit)
+        {
+          game.Hit();
+        }
+      } while (!game.HumanPlayerIsBlackjack() && !game.HumanPlayerIsBust() && nextAction != NextAction.Stay);
+
+      if(game.HumanPlayerIsBlackjack())
+      {
+        Console.WriteLine("Blackjack!");
+        Console.WriteLine($"with the hand {game.GetPlayerHandAsString()}");
+      }
+
+      if (game.HumanPlayerIsBust())
+      {
+        Console.WriteLine("Bust!");
+        Console.WriteLine($"with the hand {game.GetPlayerHandAsString()}");
+      }
     }
     private static NextAction GetNextAction()
     {

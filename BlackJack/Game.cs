@@ -31,31 +31,19 @@ namespace BlackJack
       player.Hand.Add(_deck.Draw());
     }
 
-    public void ProcessHumanPlayerAction(NextAction nextAction)
+    public void Hit()
     {
-      if (nextAction == NextAction.Hit)
-      {
-        _humanPlayer.Hit(_deck);
-        ApplyBustRule(_humanPlayer);
-      }
-      else if (nextAction == NextAction.Stay)
-      {
-        _humanPlayer.HasStayed = true;
-
-      }
-      else
-      {
-        throw new InvalidOperationException("Next Action was invalid");
-
-      }
+      _humanPlayer.DrawCard(_deck);
     }
 
-    private void ApplyBustRule(Player player)
+    public bool HumanPlayerIsBust()
     {
-      if (player.GetHandValue() > 21)
-      {
-        player.HasBusted = true;
-      }
+      return _humanPlayer.GetHandValue() > 21;
+    }
+
+    public bool HumanPlayerIsBlackjack()
+    {
+      return _humanPlayer.GetHandValue() == 21 && _humanPlayer.Hand.Count == 2;
     }
 
     public int GetPlayerHandValue()

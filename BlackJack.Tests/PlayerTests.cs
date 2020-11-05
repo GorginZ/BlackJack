@@ -12,7 +12,7 @@ namespace BlackJack.Tests
             var player = new Player();
             var deck = new Deck();
 
-            player.Hit(deck);
+            player.DrawCard(deck);
 
             const int expectedHandCount = 1;
             var actualHand = player.Hand;

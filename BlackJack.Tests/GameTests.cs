@@ -77,8 +77,7 @@ namespace BlackJack.Tests
     }
 
 
-      
-   
+    
 
 
 

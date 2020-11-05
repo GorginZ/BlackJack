@@ -8,10 +8,8 @@ namespace BlackJack
   public class Player
   {
     public List<Card> Hand { get; set; } = new List<Card>();
-    public bool HasBusted { get; set; } = false;
-    public bool HasStayed { get; set; } = false;
   
-  public void Hit(Deck deck)
+  public void DrawCard(Deck deck)
   {
     var drawnCard = deck.Draw();
     Hand.Add(drawnCard);
