@@ -28,7 +28,7 @@ namespace BlackJack.Tests
 
       var game = new Game(humanPlayer, aiDealer);
 
-      game.ProcessHumanPlayerAction(NextAction.Stay);
+      game.Hit(NextAction.Stay);
 
       const int expectedPlayer1HandCount = 2;
       var actualPlayer1HandCount = humanPlayer.Hand.Count;
@@ -45,7 +45,7 @@ namespace BlackJack.Tests
 
       var game = new Game(humanPlayer, aiDealer);
 
-      game.ProcessHumanPlayerAction(NextAction.Hit);
+      game.Hit(NextAction.Hit);
 
       const int expectedPlayer1HandCount = 3;
       var actualPlayer1HandCount = humanPlayer.Hand.Count;
@@ -62,7 +62,7 @@ namespace BlackJack.Tests
 
       var game = new Game(humanPlayer, aiDealer);
 
-      var ex = Assert.Throws<InvalidOperationException>(() => game.ProcessHumanPlayerAction(NextAction.Invalid));
+      var ex = Assert.Throws<InvalidOperationException>(() => game.Hit(NextAction.Invalid));
 
       Assert.Equal("Next Action was invalid", ex.Message);
     }
